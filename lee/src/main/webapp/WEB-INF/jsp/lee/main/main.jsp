@@ -9,7 +9,7 @@
 
 	
 	<script type="text/javascript">
-	alert(1);alert(2);
+	alert(1);alert(2);alert(3)
 	function RollImage(json){
 	//이미지 롤링 설정값
 	var config = {
