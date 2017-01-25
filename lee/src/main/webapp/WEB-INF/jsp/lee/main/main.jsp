@@ -8,8 +8,7 @@
 <script type="text/javascript" src="<c:url value="/wcom/FusionCharts/FusionCharts.js" />"></script>
 
 	
-	<script type="text/javascript">
-	alert(1);alert(2);alert(3);alert(4); 
+	<script type="text/javascript"> 
 	function RollImage(json){
 	//이미지 롤링 설정값
 	var config = {
