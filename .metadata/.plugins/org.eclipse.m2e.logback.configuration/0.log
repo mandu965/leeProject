@@ -1,0 +1,11 @@
+2017-01-25 17:07:16,364 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: a.b:c:1.0.0-BUILD-SNAPSHOT @ F:\private\Lee\Project\GitHub\Project\lee\lee\pom.xml.
+2017-01-25 17:07:18,140 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: a.b:c:1.0.0-BUILD-SNAPSHOT @ F:\private\Lee\Project\GitHub\Project\lee\lee\pom.xml.
+2017-01-25 17:07:21,134 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-01-25 17:07:21,146 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-01-25 17:07:21,158 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-01-25 17:07:21,159 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-01-25 17:07:22,528 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: a.b:c:1.0.0-BUILD-SNAPSHOT @ F:\private\Lee\Project\GitHub\Project\lee\lee\pom.xml.
+2017-01-25 17:07:24,375 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-01-25 17:07:24,379 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-01-25 17:07:24,382 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-01-25 17:07:24,384 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource

@@ -1,0 +1,2 @@
+INDEX VERSION 1.3+F:\private\Lee\Project\GitHub\Project\lee\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3288356727.index
