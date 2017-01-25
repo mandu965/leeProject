@@ -1,0 +1,170 @@
+@font-face {font-family:"NanumGothic"; src:url("NanumGothic.eot");}
+
+/* 공통 */
+body, div, ul, li, ol, dl, dt, dd, p, h1, h2, h3, h4, h5, h6, form {margin:0;padding:0;}
+body {background:#ffffff;font-size:12px;font-family:'NanumGothic', '돋움', Dotum, tahoma;color:#333333;} 
+input,textarea, select {font-family:'NanumGothic', '돋움', Dotum;font-size:12px; }
+a {color: #2D75C4;text-decoration:none;}
+a:visited {color:#2D75C4;text-decoration:none;}
+a:hover {color:#2D75C4;text-decoration:none;}
+a:active {color:#2D75C4;text-decoration:none;}
+
+img, fieldset {border:0;vertical-align:top;}
+ul, ol, dl {list-style:none}
+
+.searchText				{ font-family: 'NanumGothic', "돋움", Dotum, sans-serif; letter-spacing:0em; border:solid 1px #ccc; color:#999; height:16px; vertical-align:middle; border:1px solid #ccc; }
+.searchSelect	{ font-size:12px; font-family: 'NanumGothic', "돋움", Dotum, sans-serif; height:18px; letter-spacing:0em; border:solid 1px #ccc; color:#999;}
+
+
+.left{ float:left; }
+.right{ float:right; }
+.line_dot{clear:both; border-bottom:1px dotted #ABABAB;}
+.line_gray1{width:100%; clear:both; background-color:#DADADA;height: 1px;   }
+.line_gray2{clear:both; background-color:#DADADA;height: 1px; margin-left:3%; margin-right:3% ;  }
+.line_gray3{clear:both; background-color:#DADADA;height: 1px; margin-left:6%; margin-right:6% ;  }
+.menuLink{ margin:7px 0 0 0; padding:0;}
+
+
+
+
+
+
+/*************************** text style*********************** */
+.b{ font-weight:bold;}
+.underline{ text-decoration:underline;}
+.fontsize11{ font-size:11px;}
+
+/**컬러 */
+.highlight { color:#f6a828; }
+.highlightRed { color:#d00; }
+.highlightGreen { color:#5fa528; }
+.highlightBlue { color:#00f; }
+.highlightYellow { color:#f6a828; }
+
+
+/** text align */
+ .Tleft { text-align: left; }
+ .Tcenter { text-align: center; }
+ .Tright { text-align: right; }
+ .Tjustify { text-align: justify; }
+
+ .top { vertical-align: top; }
+ .middle { vertical-align:middle; }
+ .bottom { vertical-align: bottom; }
+
+
+
+
+
+/** div row (넓이값을 퍼센트비율로 나눌때 사용)*/
+.row { padding:0; margin:0; width:100%; display: inline-block; }
+.row10p { float:left; width:10%; }
+.row15p { float:left; width:15%; }
+.row20p { float:left; width:20%; }
+.row25p { float:left; width:25%; }
+.row30p { float:left; width:30%; }
+.row35p { float:left; width:35%; }
+.row40p { float:left; width:40%; }
+.row45p { float:left; width:45%; }
+.row50p { float:left; width:50%; }
+.row55p { float:left; width:55%; }
+.row60p { float:left; width:60%; }
+.row65p { float:left; width:65%; }
+.row70p { float:left; width:70%; }
+.row75p { float:left; width:75%; }
+.row80p { float:left; width:80%; }
+.row85p { float:left; width:85%; }
+.row90p { float:left; width:90%; }
+.row95p { float:left; width:95%; }
+
+.row div.rowLeft { float:left; }
+.row div.rowRight { float:right; }
+
+
+/** div width */
+.w10p { width:10%; }
+.w20p { width:20%; }
+.w30p { width:30%; }
+.w35p { width:35%; }
+.w40p { width:40%; }
+.w50p { width:50%; }
+.w60p { width:60%; }
+.w64p { width:64%; }
+.w70p { width:70%; }
+.w80p { width:80%; }
+.w90p { width:90%; }
+.wfull { width:100%; }
+
+
+
+/** div height */
+.h30 { height:30px; }
+.h50 { height:50px; }
+.h80 { height:80px; }
+.h100 { height:100px; }
+.h200 { height:200px; }
+.h300 { height:300px; }
+.h400 { height:400px; }
+.h500 { height:500px; }
+.h600 { height:600px; }
+.h700 { height:700px; }
+.h800 { height:800px; }
+.h900 { height:900px; }
+.h1000 { height:1000px; }
+.hfull { height:100%; }
+
+/** div space */
+.space { clear: both; height:5px; }
+.space2 { clear: both; height:2px; }
+.space10 { clear: both; height:10px; }
+.space20 { clear: both; height:20px; }
+.space30 { clear: both; height:30px; }
+.space40 { clear: both; height:40px; }
+.space50 { clear: both; height:50px; }
+.space100 { clear: both; height:10px; }
+
+
+/******************************롤오버**********************************************/
+.menu a img.menuon {
+	display: none;
+}
+.menu a img.menuoff {
+	display: inline;
+}
+.menu a:hover img.menuon {
+	display: inline;
+}
+.menu a:hover img.menuoff {
+	display: none;
+}
+
+
+
+
+/*
+	leekh 2011.10.13
+	login css 추가 
+*/ 
+#login_area	{ position:relative; width:700px;height:450px;  margin:60px  auto 0px auto; background:url(/nams/wcom/images/login/bg.gif);   }
+
+.login_logo{position:absolute; z-index:50; top:62px; left:105px;  display:inline-block;}
+
+.login_content{position:absolute; width:49px; z-index:51; top:120px; left:140px;  display:inline-block; text-align:right;}
+.login_content li{ height:26px; line-height:26px;}
+.login_content_input{position:absolute; z-index:50; top:120px; left:200px;  display:inline-block;}
+.login_content_input li{ height:26px; line-height:26px; margin:0px 50px  0px  0;}
+.login_btn{position:absolute; z-index:50; top:120px; left:368px;  display:inline-block;}
+
+.input_login { padding : 0px 2px 0px 2px; border:1px solid #b7b7b7; width:150px; height:18px;font-size:12px;font-family: 'dotum';line-height:18px;
+}
+
+/*
+	leekh 2011.10.14
+	popup 관심사항 및 회의발언내용 list 추가 
+*/ 
+.pop_list { width:100%;}
+.pop_box { float:left; width:100%;border:1px solid #D4D4D4;background-color:#FFFFFF; }
+
+.w_bg{background-color:#FFFFFF; width:67%; background:url(/nams/wcom/images/icon/ico_reply2.gif) no-repeat 5px 7px; }
+.gray_bg{ background-color:#F5F5F5;width:33%;}
+.gray_bg span{ color:#858585;}

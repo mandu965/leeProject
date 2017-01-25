@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/decorators">
+	<!-- defaultdir 속성은 데코레이터 JSP가 위치할 경로를 의미 -->
+
+	<!-- <excludes> <pattern>/wcom/*</pattern> <pattern>/ajax/*</pattern> </excludes> -->
+	<!-- 이것은 sitemesh를 사용하지 않을 패턴을 지정한다 -->
+	<excludes>
+		<pattern>*.action</pattern>
+		<pattern>/ajax/*</pattern>
+		<pattern>/techmng/html5Tag.do</pattern>
+		<pattern>/techmng/mobileImg.do</pattern>
+	</excludes>
+	
+
+	<!-- name - 데코레이터의 이름 page - 데코레이터로 사용될 JSP 페이지 -->
+
+	<!-- pattern 태그는 데코레이터를 적용할 패턴을 의미 -->
+	<!--  <decorator name="layout1" title="RPS Service" page="/WEB-INF/jsp/lee/home.jsp">
+		<pattern>home.do</pattern>
+		<pattern>/</pattern>
+	</decorator>  -->
+	<decorator name="mainDeco" page="mainDeco.jsp">
+		 <pattern>/main/*</pattern>
+		<!-- <pattern>/WEB-INF/jsp/lee/main/*</pattern> -->
+	</decorator>
+	
+	<decorator name="introDeco" page="introDeco.jsp">
+		 <pattern>/intro/*</pattern>
+	</decorator>
+	
+	<decorator name="boardDeco" page="boardDeco.jsp">
+		 <pattern>/board/*</pattern>
+		<!-- <pattern>/WEB-INF/jsp/lee/board/*</pattern> -->
+	</decorator>
+	
+	<decorator name="mpDeco" page="mpDeco.jsp">
+		 <pattern>/mp/*</pattern>
+	</decorator>
+	
+	<decorator name="prdtDeco" page="prdtDeco.jsp">
+		 <pattern>/prdt/*</pattern>
+	</decorator>
+
+	
+	<decorator name="smDeco" page="smDeco.jsp">
+		 <pattern>/sm/*</pattern>
+	</decorator>
+	
+	<decorator name="techDeco" page="techDeco.jsp">
+		 <pattern>/techmng/*</pattern>
+	</decorator>
+	
+	<decorator name="loginDeco" page="loginDeco.jsp">
+		 <pattern>/login/*</pattern>
+		<!-- <pattern>/WEB-INF/jsp/lee/login/*</pattern> -->
+	</decorator>
+
+	<decorator name="top" page="top.jsp" />
+	<decorator name="bottom" page="bottom.jsp" />
+
+</decorators>

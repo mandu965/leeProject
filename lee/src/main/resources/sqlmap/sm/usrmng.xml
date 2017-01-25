@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee.sm">
+
+<resultMap id="userExcelListListMap" class="HashMap">
+<result property="usr_nm" column="usr_nm"/>
+<result property="usr_id" column="usr_id"/>
+<result property="usr_sex" column="usr_sex"/>
+<result property="usr_birth" column="usr_birth"/>
+<result property="usr_addr" column="usr_addr"/>
+<result property="usr_point" column="usr_point"/>
+<result property="reg_date" column="reg_date"/>
+<result property="usr_hp" column="usr_hp"/>
+<result property="usr_auth_cd" column="usr_auth_cd"/>
+</resultMap>
+
+	<select id="usrmngList" resultClass="lee.sm.usrmng.service.UsrmngVO">
+		SELECT
+		*
+		FROM
+		ck_usr
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="sh_usr_id">
+				usr_id like '%' || #sh_usr_id# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="sh_usr_nm">
+				usr_nm like '%' || #sh_usr_nm# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="sh_usr_sexList" prepend="and">
+				<iterate property="sh_usr_sexList" open="(" close=")" conjunction="or">
+					usr_sex = #sh_usr_sexList[]#
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="sh_usr_athList" prepend="and">
+				<iterate property="sh_usr_athList" open="(" close=")" conjunction="or">
+					usr_auth_cd = #sh_usr_athList[]#
+				</iterate>
+			</isNotEmpty>
+		
+		</dynamic>
+	</select>
+
+
+	<insert id="usrmngAdd" parameterClass="lee.sm.usrmng.service.UsrmngVO">
+		<selectKey resultClass="long" keyProperty="usr_no">
+			select
+			seq_ck_usr.nextVal
+			from dual
+		</selectKey>
+
+		insert into ck_usr (
+		usr_no, usr_id, usr_pw, usr_nm, usr_sex, usr_addr, usr_birth, usr_auth_cd,
+		usr_point, reg_date, usr_hp
+
+		) values (
+		#usr_no#, #usr_id#, #usr_pw#, #usr_nm#, #usr_sex#, #usr_addr#, #usr_birth#, #usr_auth_cd# ,
+		'N', 0, sysdate, #usr_hp#
+		)
+	</insert>
+	
+	<select id="usrmngView" parameterClass="long" resultClass="lee.sm.usrmng.service.UsrmngVO">
+		select
+		 	usr_no, usr_id, usr_auth_cd, reg_date, usr_addr, usr_birth, usr_hp, usr_nm, usr_point, usr_sex
+		from ck_usr
+		where
+			usr_no=#value#
+
+	</select>
+	
+	<update id="usrmngMod" parameterClass="lee.sm.usrmng.service.UsrmngVO" >
+		update ck_usr
+		set
+			usr_id=#usr_id#,usr_auth_cd=#usr_auth_cd#, usr_addr=#usr_addr#,
+			usr_birth=#usr_birth#, usr_hp=#usr_hp#, usr_nm=#usr_nm#, usr_point=#usr_point#, usr_sex=#usr_sex#
+		where
+			usr_no=#usr_no#
+		
+
+	</update>
+
+	<delete id="usrmngDel" parameterClass="String">
+		delete from ck_usr
+		where
+		lgin_id=#value#
+
+	</delete>
+	
+	<select id="userExcelList" parameterClass="HashMap" resultMap="userExcelListListMap">
+		SELECT
+		usr_nm, usr_id, usr_sex, usr_birth, usr_addr, usr_point, reg_date, usr_hp, usr_auth_cd
+		FROM
+		ck_usr
+	</select>
+</sqlMap>

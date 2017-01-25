@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee">
+
+    <select id="boardList" parameterClass="lee.board.service.BoardSearchVO" resultClass="lee.board.service.BoardVO">
+		SELECT
+		    bbs_sno,
+	        blt_rsrc_sno,
+	        bbs_title,
+	        bbs_contents,
+	        reg_usr_no,
+	        FUN_GETUSRNAME(reg_usr_no) as usr_nm,
+	        bbs_cnt,
+	        atch_file_sno,
+	        ntc_yn,
+			to_char(reg_date, 'YYYY-MM-DD') as reg_date,
+			(select usr_id from ck_usr where usr_no=reg_usr_no) as usr_id
+		<!-- 	(substr(reg_date,0,3) || '-' ||substr(reg_date,5,6) ||'-' || substr(reg_date,8,9)) as --> <!-- substr(reg_date,0,2) as reg_date  -->          
+			<!-- substr(to_date(reg_date, 'yy-mm-dd'),2) as reg_date  5/01/22 이렇게 나온다. --> 
+			<!-- to_date(reg_date, 'yy-mm-dd') as reg_date 2015-01-22 00:00:00 이렇게 나온다.-->
+		FROM
+		  ck_blt_rsrc
+		where 
+		   bbs_sno = #bbs_sno# and 
+		   del_yn = 'N'
+		   <isNotEmpty property="sh_reg_usr" prepend="and">
+				FUN_GETUSRNAME(reg_usr_no) as usr_nm like '%' || #sh_reg_usr# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="sh_title" prepend="and">
+				bbs_title like '%' || #sh_title# || '%'
+			</isNotEmpty>
+			<!-- <isNotEmpty property="sh_id" prepend="and">
+				
+			</isNotEmpty> -->
+		  order by ntc_yn desc, blt_rsrc_sno desc, reg_date desc
+    </select>
+   
+
+   <insert id="boardAdd" parameterClass="lee.board.service.BoardVO">
+ 
+       <selectKey resultClass="long" keyProperty="blt_rsrc_sno">
+			select
+			  seq_ck_blt_rsrc.nextVal 
+			 from dual
+		</selectKey>
+
+		insert into ck_blt_rsrc (
+		blt_rsrc_sno, bbs_sno,
+		bbs_title, bbs_contents, reg_usr_no,
+		atch_file_sno, bbs_cnt, del_yn, reg_date,
+		ntc_yn, main_ntc_yn, popup_end_dt, popup_stt_dt, popup_height, popup_width, popup_x_pos, popup_y_pos
+
+		) values (
+			#blt_rsrc_sno#, #bbs_sno#,
+			#bbs_title#, #bbs_contents#, #reg_usr_no#, 
+			#atch_file_sno#,#bbs_cnt#, #del_yn#, sysdate,
+			#ntc_yn#, #main_ntc_yn#, #popup_end_dt#, #popup_stt_dt#, #popup_height#, #popup_width#, #popup_x_pos#, #popup_y_pos#
+			 
+		)
+	</insert> 
+	
+	 <select id="boardView" parameterClass="long" resultClass="lee.board.service.BoardVO">
+		SELECT
+		       blt_rsrc_sno, bbs_sno, bbs_title, bbs_contents, reg_usr_no, FUN_GETUSRNAME(reg_usr_no) as usr_nm,
+		         to_char(reg_date, 'yyyy-mm-dd') as reg_date , bbs_cnt, del_yn, atch_file_sno,
+		         ntc_yn, main_ntc_yn, popup_end_dt, popup_stt_dt, popup_height, popup_width, popup_x_pos, popup_y_pos
+		FROM
+			  ck_blt_rsrc
+		Where
+		      blt_rsrc_sno = #value#
+    </select>
+    
+   
+    
+     <update id="boardMod" parameterClass="lee.board.service.BoardVO">
+	     update ck_blt_rsrc
+	     set
+	     	bbs_title = #bbs_title#, bbs_contents = #bbs_contents#,atch_file_sno = #atch_file_sno#, 
+	     	ntc_yn=#ntc_yn#, main_ntc_yn=#main_ntc_yn#, popup_end_dt=#popup_end_dt#, 
+	     	popup_stt_dt=#popup_stt_dt#, popup_height=#popup_height#, popup_width=#popup_width#, 
+	     	popup_x_pos=#popup_x_pos#, popup_y_pos=#popup_y_pos#
+	     where
+	     	blt_rsrc_sno = #blt_rsrc_sno# 
+     </update>
+     
+      <update id="boardDel" parameterClass="lee.board.service.BoardVO">
+		update ck_blt_rsrc
+		set
+		   del_yn='Y'
+		where
+		   blt_rsrc_sno = #blt_rsrc_sno#
+   	 </update>
+    
+     <update id="cntCount" parameterClass="lee.board.service.BoardVO" >
+		update
+		    ck_blt_rsrc
+		set 
+			bbs_cnt = #bbs_cnt#
+		Where
+		      blt_rsrc_sno = #blt_rsrc_sno#
+
+    </update>
+    
+    <select id="cmntList" parameterClass="lee.board.service.CmntVO" resultClass="lee.board.service.CmntVO">
+		select
+			cmnt_sno, cmnt_contents, blt_rsrc_sno, to_char(reg_date, 'yyyy-mm-dd hh24:mi') as reg_date, 
+			reg_usr_no, fun_getUsrName(reg_usr_no) as usr_nm
+		from
+			ck_cmnt
+		where
+			blt_rsrc_sno = #blt_rsrc_sno# and
+			del_yn='N'
+		order by cmnt_sno desc
+	</select>
+	
+	<select id="cmntView" parameterClass="long" resultClass="lee.board.service.CmntVO">
+	select
+		cmnt_sno, cmnt_contents, del_yn, reg_date, reg_usr_no, blt_rsrc_sno
+	from
+		ck_cmnt
+	where
+		cmnt_sno = #value# and
+		del_yn='N'
+	
+	
+	</select>
+	
+	<insert id="cmntAdd" parameterClass="lee.board.service.CmntVO">
+		<selectKey resultClass="long" keyProperty="cmnt_sno">
+			select 
+				seq_ck_cmnt.nextval
+			from dual
+		</selectKey>
+		insert into ck_cmnt (
+			cmnt_sno, cmnt_contents, del_yn, reg_date, reg_usr_no, blt_rsrc_sno
+		) values (
+			#cmnt_sno#, #cmnt_contents#, 'N', sysdate, #reg_usr_no#, #blt_rsrc_sno#
+		)
+	</insert>
+	
+	<update id="cmntDel" parameterClass="long">
+		update
+			ck_cmnt
+		set
+			del_yn='Y'
+		where
+			cmnt_sno = #cmnt_sno#
+	</update>
+	
+	<update id="cmntMod" parameterClass="lee.board.service.CmntVO">
+		update
+			ck_cmnt
+		set
+			cmnt_contents=#cmnt_contents#, reg_date=sysdate
+		where
+			cmnt_sno = #cmnt_sno#
+	</update>
+	
+
+</sqlMap>

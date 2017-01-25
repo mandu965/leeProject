@@ -1,0 +1,95 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="click.ClickConstants" %>
+<%
+String filename = "";
+String fileExt = "";
+String realFolder = ClickConstants.getBbsSaveDir();	//웹 어플리케이션의 절대경로
+//파일이 업로드되는 폴더를 지정한다
+String encType = "utf-8";	//인코딩 타입
+int maxSize = 10*1024*1024;	//최대 업로드 될 파일크기 10Mb
+String url = "";	// 반환되는 URL주소
+
+try{
+	File directory = new File(realFolder);
+	if(!directory.exists()) directory.mkdirs();	//폴더가 없으면 새로 생성
+	
+	MultipartRequest multi = null;
+	//전송을 담당할 콤포넌트를 생성하고 그 파일을 전송한다
+	//전송할 파일명을 가지고 있는 객체, 서버상의 절대경로, 최대업로드될 파일 크기, 문자코드, 기본보안 적용
+	multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+	
+	url = multi.getParameter("callback") + "?callback_func=" + multi.getParameter("callback_func");
+	
+	//Form의 파라미터 목록을 가져온다
+	Enumeration<?> params = multi.getParameterNames();
+	
+	//파라미터를 출력한다
+	while(params.hasMoreElements()){
+		String name =(String)params.nextElement();	//전송되는 파라미터 이름
+		String value = multi.getParameter(name);	//전송되는 파라미터값
+	}
+
+	//전송되는 파일 정보를 가져와 출력한다
+	Enumeration<?> files = multi.getFileNames();
+
+ 	//파일 정보가 있다면
+	while(files.hasMoreElements()){
+		//input 태그의 속성이 file 인 태그의 name 속성값 : 파라미터 이름
+		String name =(String)files.nextElement();
+		
+		//서버에 저장된 파일 이름
+		filename = multi.getFilesystemName(name);
+		
+		//전송전 원래의 파일 이름
+		String original = multi.getOriginalFileName(name);
+		
+		//서버에 저장된 파일 확장자
+		fileExt = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();
+		
+		//이미지파일이 아닐 경우 등록하지 않음 - 2013.11.27. 추가
+		if(!(fileExt.equalsIgnoreCase("jpg") || fileExt.equalsIgnoreCase("png") ||fileExt.equalsIgnoreCase("bmp") || fileExt.equalsIgnoreCase("gif"))){
+			out.print("<script>alert('jpg, png, bmp, gif 확장자를 가진 이미지 파일만 등록할 수 있습니다.');parent.location.reload();</script>");
+			return;
+		}
+		
+		//전송된 파일의 내용 타입
+		String type = multi.getContentType(name);
+		
+		//전송된 파일 속성이 file 인 태그의 name 속성값을 이용해 파일의 객체 생성
+		File file = multi.getFile(name);
+		
+		//파일명을 현재 시간으로 변경 - S
+		String nowtime = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());  //현재시간
+
+        String realfilename = nowtime + "." + fileExt;  //현재시간과 확장자 합치기
+        
+        File oldfile = new File(ClickConstants.getBbsSaveDir() + "/" + filename);
+        File newfile = new File(ClickConstants.getBbsSaveDir() + "/" + realfilename);
+        
+        oldfile.renameTo(newfile);	//파일명 변경
+        //파일명을 현재 시간/분/초로 변경 - E
+
+		url += "&bNewLine=true";
+		url += "&sFileName=" + realfilename;
+		url += "&sFileURL=" + ClickConstants.getBbsSaveUrl() + "/" + realfilename;
+	}
+} catch(IOException ioe) {
+	System.out.println(ioe);
+	url += "&errstr=error";
+} catch(Exception ex) {
+	System.out.println(ex);
+}
+%>
+<html>
+<head><title>   </title></head>
+<body>
+<script type="text/javascript">
+	location.replace('<%=url%>');
+</script>
+</body>
+</html>

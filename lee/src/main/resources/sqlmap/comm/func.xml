@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+
+    <resultMap id="zipCodeMap" class="HashMap">
+		<result property="zipcode" column="zipcode" />
+		<result property="sido" column="sido" />
+		<result property="gugun" column="gugun" />
+		<result property="dong" column="dong" />
+		<result property="ri" column="ri" />
+		<result property="bunji" column="bunji" />
+	</resultMap>
+	
+	<resultMap id="selectBoxMap" class="HashMap">
+		<result property="value" column="value" />
+		<result property="text" column="text" />
+	</resultMap>
+	
+	<select id="funcDAO.lgcateList" parameterClass="HashMap" resultMap="selectBoxMap">
+		select
+			lg_cate_sno as value,
+			lg_cate_nm as text
+		from
+			ck_lg_category
+		where
+			use_yn = 'Y'
+	</select>
+
+	<select id="funcDAO.cateList" parameterClass="HashMap" resultMap="selectBoxMap">
+		select
+			cate_sno as value,
+			cate_nm as text
+		from
+			ck_category
+		where
+			use_yn = 'Y'
+			<isNotEmpty property="lg_cate_sno" prepend="and">
+				<isNotEqual property="lg_cate_sno" compareValue="0">
+					lg_cate_sno = #lg_cate_sno#
+				</isNotEqual>
+			</isNotEmpty> 
+	</select>
+	
+	<select id="funcDAO.zipCodeList" parameterClass="HashMap" resultClass="lee.comm.func.service.ZipCodeVO">
+		select
+			zipcode, sido, gugun, dong, ri, bunji, seq,
+			('('||zipcode||')'||sido||' '||gugun||' '||dong||' '||ri||' '||bunji) as addr
+		from
+			zipcode
+		<dynamic prepend="where">
+			<isNotEmpty property="dong" prepend="and">
+				dong like '%' || #dong# || '%'
+			</isNotEmpty> 
+		</dynamic>
+	</select>
+	
+	
+
+	
+
+</sqlMap>

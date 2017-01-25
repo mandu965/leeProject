@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Attach">
+	
+	<!-- <select id="attachDAO.attachBbsMaxSize" parameterClass="HashMap" resultClass="long">
+		select
+			max_upl_sz_byte
+		from
+			ck_bbs_cls
+		where
+			bbs_sno = #bbs_sno#
+			and bbs_cls_no = #bbs_cls_no#
+			and del_yn = 'N'
+	</select> -->
+	
+	<insert id="attachDAO.attachAdd" parameterClass="lee.comm.attach.service.AttachVO">
+		<selectKey resultClass="long" keyProperty="atch_file_sno">
+			select 
+				decode(#atch_file_sno#, 0, seq_ck_atch_file.nextval, #atch_file_sno#)
+			from dual
+		</selectKey>
+		insert into ck_atch_file (
+			atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, kpn_url, file_dsp_nm, 
+			file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, rsrc_cmnt_cntn, dtl_cntn_yn, reg_usr_no
+		) values (
+			#atch_file_sno#, (
+				select 
+					nvl(max(atch_file_no), 0) + 1
+				from 
+					ck_atch_file
+				where 
+					atch_file_sno = #atch_file_sno#
+			), #svc_dman_cd#, #svc_sno#, #atch_file_ver#, #kpn_lctn_cntn#, #kpn_url#, #file_dsp_nm#, 
+			#file_kpn_nm#, #file_estn_nm#, #file_tp_nm#, #file_sz_byte#, #rsrc_tlt#, #rsrc_cmnt_cntn#
+			<isEqual property="dtl_cntn_yn" compareValue="Y" prepend=",">'Y'</isEqual>
+			<isNotEqual property="dtl_cntn_yn" compareValue="Y" prepend=",">'N'</isNotEqual>, #reg_usr_no#
+		)
+	</insert>
+	
+	<!-- <update id="attachDAO.attachPublish" parameterClass="HashMap">
+		update
+			ck_atch_file
+		set
+			svc_sno = #svc_sno#
+		where
+			atch_file_sno = #atch_file_sno#
+	</update> -->
+	
+	<select id="attachDAO.attachList" parameterClass="HashMap" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, 
+			kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, 
+			rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, to_char(reg_dttm, 'yyyy-mm-dd') reg_dttm
+		from
+			ck_atch_file
+		where
+			atch_file_sno = #atch_file_sno#
+			<isNotEqual property="dtl_cntn_yn" prepend="and" compareValue="A">
+				dtl_cntn_yn = #dtl_cntn_yn#
+			</isNotEqual>
+			and del_yn = 'N'
+		order by
+			dtl_cntn_yn desc
+	</select>
+	
+	<!-- <select id="attachDAO.attachList2" parameterClass="HashMap" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, 
+			kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, 
+			rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, to_char(reg_dttm, 'yyyy-mm-dd') reg_dttm
+		from
+			ck_atch_file
+		where
+			del_yn = 'N'
+			<isNotEmpty prepend="and" property="atchfileList">
+				<iterate prepend="atch_file_sno IN" property="atchfileList" open="(" close=")" conjunction=","> 
+					#atchfileList[]# 
+				</iterate>
+			</isNotEmpty>
+			<isNotEqual property="dtl_cntn_yn" prepend="and" compareValue="A">
+				dtl_cntn_yn = #dtl_cntn_yn#
+			</isNotEqual>
+		order by
+			dtl_cntn_yn desc
+	</select> -->
+	
+	<select id="attachDAO.attachView" parameterClass="HashMap" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, 
+			kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, 
+			rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, to_char(reg_dttm, 'yyyy-mm-dd') reg_dttm, reg_usr_no
+		from
+			ck_atch_file
+		where
+			atch_file_sno = #atch_file_sno#
+			and atch_file_no = #atch_file_no#
+			and del_yn = 'N'
+	</select>
+	
+	<!-- <select id="attachDAO.attachHisView" parameterClass="HashMap" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			hst_sno, atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, 
+			kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, 
+			rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, to_char(reg_dttm, 'yyyy-mm-dd') reg_dttm, reg_usr_no
+		from
+			ck_atch_file_hst
+		where
+			hst_sno = #hst_sno#
+			and del_yn = 'N'
+	</select>
+	-->
+	<update id="attachDAO.attachDwn" parameterClass="HashMap">
+		update
+			ck_atch_file
+		set 
+			dwn_num = dwn_num + 1
+		where
+			atch_file_sno = #atch_file_sno#
+			and atch_file_no = #atch_file_no#
+			and del_yn = 'N'
+	</update>
+	 
+	<!-- <update id="attachDAO.attachHisDwn" parameterClass="HashMap">
+		update
+			ck_atch_file_hst
+		set 
+			dwn_num = dwn_num + 1
+		where
+			hst_sno = #hst_sno#
+			and del_yn = 'N'
+	</update> -->
+	
+	<!-- <select id="attachDAO.attachContentsView" parameterClass="long" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, kpn_lctn_cntn, 
+			kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, file_sz_byte, rsrc_tlt, 
+			rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, to_char(reg_dttm, 'yyyy-mm-dd') reg_dttm
+		from
+			ck_atch_file
+		where
+			atch_file_sno = #atch_file_sno#
+			and dtl_cntn_yn = 'Y'
+			and del_yn = 'N'
+	</select> -->
+	
+	<delete id="attachDAO.attachContentsDel" parameterClass="long">
+		delete 
+		from
+			ck_atch_file
+		where
+			atch_file_sno = #atch_file_sno#
+			and dtl_cntn_yn = 'Y'
+			and del_yn = 'N'
+	</delete>
+	
+	<delete id="attachDAO.attachDel" parameterClass="HashMap">
+		delete
+		from
+			ck_atch_file
+		where
+			atch_file_sno = #atch_file_sno#
+			<isNotEmpty property="atch_file_no" prepend="and">
+				atch_file_no = #atch_file_no#
+			</isNotEmpty>
+	</delete>
+	
+	<!-- <update id="attachDAO.attachFlagMod" parameterClass="HashMap">
+		update
+			ck_atch_file
+		set
+			del_yn = #del_yn#
+			<isEqual property="del_yn" compareValue="Y" prepend=",">
+				del_usr_no = #usr_no#, del_dttm = sysdate
+			</isEqual>
+			<isEqual property="del_yn" compareValue="N" prepend=",">
+				mod_usr_no = #usr_no#, mod_dttm = sysdate
+			</isEqual>
+		where
+			atch_file_sno = #atch_file_sno#
+	</update> -->
+	
+	<!-- <select id="attachDAO.attachViewForHis" parameterClass="lee.comm.attach.service.AttachVO" resultClass="lee.comm.attach.service.AttachVO">
+		select
+			r1.atch_file_sno, r1.atch_file_no, r1.svc_dman_cd, r1.svc_sno, r1.atch_file_ver, r1.kpn_lctn_cntn, r1.kpn_url, 
+			r1.file_dsp_nm, r1.file_kpn_nm, r1.file_estn_nm, r1.file_tp_nm, r1.file_sz_byte, r1.rsrc_tlt, r1.rsrc_cmnt_cntn, 
+			r1.dwn_num, r1.open_yn, r1.dtl_cntn_yn, r1.del_yn, r1.reg_usr_no, to_char(r1.reg_dttm, 'yyyy-mm-dd hh24:mi:ss') as reg_dttm, 
+			r1.mod_usr_no, 	to_char(r1.mod_dttm, 'yyyy-mm-dd hh24:mi:ss') as mod_dttm, r1.del_usr_no, 
+			to_char(r1.del_dttm, 'yyyy-mm-dd hh24:mi:ss') as del_dttm
+		from
+			ck_atch_file r1
+		where
+			atch_file_sno = #atch_file_sno#
+			and atch_file_no = #atch_file_no#
+	</select>
+	
+	<insert id="attachDAO.attachHisAdd" parameterClass="lee.comm.attach.service.AttachVO">
+		<selectKey resultClass="long" keyProperty="hst_sno">
+			select 
+				decode(#hst_sno#, 0, seq_ck_atch_file_his.nextval, #hst_sno#)
+			from dual
+		</selectKey>
+		insert into ck_atch_file_hst (
+			hst_sno, atch_file_sno, atch_file_no, svc_dman_cd, svc_sno, atch_file_ver, 
+			kpn_lctn_cntn, kpn_url, file_dsp_nm, file_kpn_nm, file_estn_nm, file_tp_nm, 
+			file_sz_byte, rsrc_tlt, rsrc_cmnt_cntn, dwn_num, open_yn, dtl_cntn_yn, del_yn, 
+			reg_usr_no, reg_dttm, mod_usr_no, 
+			mod_dttm, del_usr_no, del_dttm
+		) values (
+			#hst_sno#, #atch_file_sno#, #atch_file_no#, #svc_dman_cd#, #svc_sno#, #atch_file_ver#, 
+			#kpn_lctn_cntn#, #kpn_url#, #file_dsp_nm#, #file_kpn_nm#, #file_estn_nm#, #file_tp_nm#, 
+			#file_sz_byte#, #rsrc_tlt#, #rsrc_cmnt_cntn#, #dwn_num#, #open_yn#, #dtl_cntn_yn#, #del_yn#, 
+			#reg_usr_no#, to_date(#reg_dttm#, 'yyyy-mm-dd hh24:mi:ss'), #mod_usr_no#, 
+			to_date(#mod_dttm#, 'yyyy-mm-dd hh24:mi:ss'), #del_usr_no#, to_date(#del_dttm#, 'yyyy-mm-dd hh24:mi:ss')
+		)
+	</insert>
+	
+	<update id="attachDAO.attachMod" parameterClass="lee.comm.attach.service.AttachVO">
+		update
+			ck_atch_file
+		set
+			atch_file_ver = atch_file_ver+1, kpn_lctn_cntn = #kpn_lctn_cntn#, kpn_url = #kpn_url#, 
+			file_dsp_nm = #file_dsp_nm#, file_kpn_nm = #file_kpn_nm#, file_estn_nm = #file_estn_nm#,file_sz_byte=#file_sz_byte#,
+			file_tp_nm = #file_tp_nm#, rsrc_tlt = #rsrc_tlt#, rsrc_cmnt_cntn = #rsrc_cmnt_cntn#,
+			mod_usr_no = #mod_usr_no#, mod_dttm = sysdate
+		where
+			atch_file_sno = #atch_file_sno#
+			and atch_file_no = #atch_file_no#
+			and del_yn = 'N'
+	</update> -->
+	<!-- 
+	<select id="attachDAO.getRsrcRdnSno" parameterClass="HashMap" resultClass="long">
+		select
+			rsrc_rdn_sno
+		from
+			$table_name$
+		where
+			<isEqual property="table_name" compareValue="ck_nds_rsrc">
+				nds_rsrc_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_nds_rsrc_colt">
+				colt_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_qstn_iwr_ans">
+				ans_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_qstn_iwr_ans_colt">
+				colt_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_qstn_iwr_ans">
+				ans_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_qstn_iwr_ans_colt">
+				colt_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_blt_rsrc">
+				blt_rsrc_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_colt_rsrc">
+				colt_rsrc_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_na_mm_dysc">
+				dysc_sno = #svc_sno#
+			</isEqual>
+			<isEqual property="table_name" compareValue="ck_mmbr_na_itrstt_cntn">
+				itrstt_sno = #svc_sno#
+			</isEqual>
+	</select> -->
+	
+</sqlMap>

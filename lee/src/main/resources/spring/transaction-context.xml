@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<context:component-scan base-package="lee">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    <!-- 트랜잭션 관리자 설정 -->
+   <!--  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="dataSource"/>
+	</bean> -->
+	
+	<!-- 트랜잭션 Advice 설정 -->
+	<!-- <tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice> -->
+    
+    <!-- 트랜잭션 Pointcut 설정 -->
+	<!-- <aop:config>
+		<aop:pointcut id="requiredTx"
+			expression="execution(* *..*Impl.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
+		advisor : advice와 pointcut을 포함하고있는 개념. Aspect와 같은 개념이라 생각하면 됨 
+	</aop:config> -->
+    
+    
+  <aop:aspectj-autoproxy/><!-- aop관련설정 annotaion 처럼 관리 가능 -->
+  <!-- @Aspect 어노테이션을 통해서 bean을 등록시켜주는 역할을 한다. -->
+	
+
+	<bean id="aopTest" class="lee.test.spring.aop.XmlAopTest"/>
+
+ 	<!-- <aop:config>
+		<aop:aspect ref="aopTest">
+		<aop:pointcut id="xmlPointCut" expression="execution(* *..*Impl.*(..))"/>	
+		<aop:pointcut id="xmlPointCut" expression="execution(* lee..*Impl.*(..))"/>
+			Advice : S
+			<aop:around pointcut-ref="xmlPointCut" method="aroundAOP" />
+			<aop:before pointcut-ref="xmlPointCut" method="breforeAOP" />
+			<aop:after pointcut-ref="xmlPointCut" method="afterAOP" />
+			<aop:after-returning pointcut-ref="xmlPointCut" method="afterReturningAOP" returning="retValue"/>
+			<aop:after-throwing pointcut-ref="xmlPointCut" method="afterThrowing" throwing="ex"/>
+			Advice : E
+		</aop:aspect>
+	</aop:config> -->
+	
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee">
+
+
+	<select id="loginInfo" parameterClass="String"
+		resultClass="lee.sm.usrmng.service.UsrmngVO">
+		SELECT
+			usr_id, usr_pw, usr_no, usr_auth_cd, usr_addr, usr_birth, usr_nm, usr_point,
+			usr_sex, reg_date, usr_hp
+		FROM
+			ck_usr
+		WHERE
+			usr_id = #value#
+	</select>
+
+
+
+</sqlMap>

@@ -1,0 +1,47 @@
+* html { filter: expression(document.execCommand("BackgroundImageCache",false,true)); }
+html{ 
+	overflow-y:scroll;
+
+	scrollbar-face-color: #F7F7FF; 
+	scrollbar-shadow-color: #c7c7c7;     
+	scrollbar-highlight-color: #FFFFFF; 
+	scrollbar-3dlight-color: #F7F7F7;     
+	scrollbar-darkshadow-color:#F7F7F7; 
+	scrollbar-track-color: #FDFDFD;   
+	scrollbar-arrow-color: #A5A6A5;
+}
+
+/****************layout*******************/
+
+.LEE_WRAPPER {
+	width: 1100px;
+	margin:0;
+	position:relative;
+	height:auto; 
+	margin:0 auto;
+}
+
+.LEE_TOP {    
+	position: relative;
+	height:94px; 
+	 }
+
+
+.LEE_LEFT {
+	position: relative;
+	float: left; /* float, 왼쪽에 떠잇게 한다. */
+	width: 200px; /* 현재 로고그림 width 270 */
+	margin-top:10px;
+	margin-rigth:30px;
+	 /* border-right:solid 1px #bfc1c4; */
+	/* border:solid 1px #ff0000; */
+	
+} 
+	
+.LEE_BOTTOM {
+	position: relative;
+	clear:both;   /* 이걸 사용해야 다음블록, 즉 밑으로 내려오게 된다. 사용하지 않으면 그 옆의 빈공간에 들어가게된다 (LEFT, CENTER, BOTTOM) 이렇게! */
+	padding-top:10px;
+	margin-bottom:10px;
+	border-top:solid 1px #bfc1c4;
+}

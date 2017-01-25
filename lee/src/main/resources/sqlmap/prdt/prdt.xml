@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee.prdt">
+
+  <!--   <resultMap id="prdtmngListMap" class="HashMap">
+	   	<result property="prdt_sno" column="prdt_sno"/>
+		<result property="prdt_sex" column="prdt_sex"/>
+		<result property="prdt_cate1" column="prdt_cate1"/>
+		<result property="prdt_cate2" column="prdt_cate2"/>
+		<result property="prdt_nm" column="prdt_nm"/>
+		<result property="prdt_price" column="prdt_price"/>
+		<result property="prdt_price_nm" column="prdt_price_nm"/>
+		<result property="prdt_expl" column="prdt_expl"/>
+		<result property="del_yn" column="del_yn"/>
+	</resultMap>
+ -->
+
+	<select id="prdtList" parameterClass ="lee.prdt.service.PrdtSearchVO" resultClass ="lee.prdt.service.PrdtVO" >
+		SELECT 
+		  prdt_sno, lg_cate_sno, cate_sno, atch_file_sno, prdt_expl, prdt_nm, prdt_price, reg_date, reg_usr_no, use_yn,
+		  fun_getlgcatename(lg_cate_sno) as lg_cate_nm, fun_getcatename(lg_cate_sno, cate_sno) as cate_nm,
+		  (select file_kpn_nm from ck_atch_file where atch_file_sno = a.atch_file_sno and rownum = 1) as thumb
+		  
+	   FROM
+		  CK_PRDT a
+	</select>
+
+	<select id="prdtView" parameterClass ="long" resultClass ="lee.prdt.service.PrdtVO" >
+	  SELECT 
+	  	prdt_sno, lg_cate_sno, cate_sno, atch_file_sno, prdt_expl, prdt_nm, prdt_price, reg_date, reg_usr_no, use_yn,
+		 fun_getlgcatename(lg_cate_sno) as lg_cate_nm, fun_getcatename(lg_cate_sno, cate_sno) as cate_nm,
+		 (select file_kpn_nm from ck_atch_file where atch_file_sno = a.atch_file_sno and rownum = 1) as thumb
+	   FROM
+		  CK_PRDT a
+		 where
+		 prdt_sno = #prdt_sno#
+		  
+	</select>
+	
+	<update id="prdtmngMod" parameterClass="lee.prdt.service.PrdtVO">
+		update ck_prdt
+		set
+			lg_cate_sno = #lg_cate_sno#, cate_sno = #cate_sno#, atch_file_sno = #atch_file_sno#, 
+			prdt_expl=#prdt_expl#, prdt_nm=#prdt_nm#, prdt_price=#prdt_price#, use_yn = #use_yn#
+		where
+			prdt_sno=#prdt_sno#
+	
+	</update>
+	
+	<insert id="cartAdd" parameterClass="lee.prdt.service.OrderVO">
+       <selectKey resultClass="long" keyProperty="order_sno">
+			select
+			  seq_ck_order.nextVal 
+			 from dual
+		</selectKey>
+
+		insert into ck_order (
+			order_sno, cart_reg_date, prdt_count, order_state, prdt_sno, usr_no, total_price
+		) values (
+			#order_sno#, sysdate, #prdt_count#, #order_state#, #prdt_sno#, #usr_no#, #total_price#
+			 
+		)
+	</insert> 
+	
+		<insert id="orderAdd" parameterClass="lee.prdt.service.OrderVO">
+       <selectKey resultClass="long" keyProperty="order_sno">
+			select
+			  seq_ck_order.nextVal 
+			 from dual
+		</selectKey>
+
+		insert into ck_order (
+			order_sno, usr_no, prdt_count, addr, order_date, order_state, pay_gubun, prdt_sno, pay_gubun2, total_price, usr_nm, usr_hp
+		) values (
+			#order_sno#, #usr_no#, #prdt_count#, #addr#, sysdate, #order_state#, #pay_gubun#, #prdt_sno#, #pay_gubun2#, #total_price#, #usr_nm#, #usr_hp#
+			 
+		)
+	</insert> 
+
+</sqlMap>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee.sm">
+
+	<select id="lgcatemngView" parameterClass="long" resultClass="lee.sm.catemng.service.LgcatemngVO">
+		select
+		 	lg_cate_sno, lg_cate_nm, use_yn
+		from ck_lg_category
+		where
+			lg_cate_sno=#value#
+
+	</select>
+	<select id="catemngView" parameterClass="long" resultClass="lee.sm.catemng.service.CatemngVO">
+		select
+		 	cate_sno, cate_nm, cate_sex, use_yn, lg_cate_sno
+		from ck_category
+		where
+			cate_sno=#value#
+
+	</select>
+	
+</sqlMap>

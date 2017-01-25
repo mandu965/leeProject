@@ -4,33 +4,44 @@
 
 	<!-- Appenders -->
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
+		<!-- <param name="Target" value="System.out" /> -->
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="a.b.c">
+	<logger name="lee">
 		<level value="info" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
-		<level value="info" />
+	<!-- <logger name="org.springframework.core" >
+		<level value="debug" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
+	<logger name="org.springframework.context" >
+		<level value="debug" />
+	</logger> -->
 
-	<logger name="org.springframework.web">
-		<level value="info" />
+	<!-- <logger name="org.springframework.web" additivity="false">
+		<level value="debug" />
+	</logger> -->
+	
+	<logger name="org.springframework"  additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console" />
 	</logger>
+	
+	<!-- 추가 :S-->
+	<logger name="java.sql">
+		<level value="debug" />
+	</logger>
+	<!-- 추가 :E-->
 
 	<!-- Root Logger -->
 	<root>

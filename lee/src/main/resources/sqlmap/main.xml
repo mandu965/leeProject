@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee.main">
+
+<select id="mainNoticeList" resultClass="lee.board.service.BoardVO">
+	select
+		*
+		from
+			ck_blt_rsrc 
+		where
+			del_yn = 'N' and
+	        main_ntc_yn='Y'
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<context:component-scan base-package="lee" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>   
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+    
+    
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	
+	<!-- 객체로 반환, 
+	컨트롤러에서 리턴 받은 뷰의 이름과 
+	빈에 등록되어 있는(DispatcherServlet의 어플리케이션 컨텍스트에 있는) id의
+	 값이 같은것을 찾아 실행 시킨다. -->
+	<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1"/>
+	
+	
+	<mvc:annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2" p:viewClass="org.springframework.web.servlet.view.JstlView" p:prefix="/WEB-INF/jsp/lee/" p:suffix=".jsp"/>
+    <!-- jsp 문서로 반환 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/lee/" />
+		<property name="suffix" value=".jsp" />
+	</bean> -->
+	
+ 	<mvc:interceptors> 
+  		<mvc:interceptor>
+		    <mvc:mapping path="/mp/**" />
+		    <!-- 예외일경우 아래와같이 --> 
+		    <!-- <mvc:exclude-mapping path="/**" /> --> 
+		    <bean class="lee.DefaultInterceptor"/>
+  		</mvc:interceptor>
+  		<mvc:interceptor>
+  			<mvc:mapping path="/sm/**" />
+  			<bean class="lee.AdminInterceptor"/>
+  		</mvc:interceptor>
+    </mvc:interceptors>
+    
+    <!-- [GENERAL DEFINITIONS] -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>WEB-INF/config/lee.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Multipart Upload -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000000" />
+        <property name="maxInMemorySize" value="100000000" />
+    </bean>
+	
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"></bean>
+	
+	<!-- 상수 설정 -->
+	<bean id="lee.constants" class="lee.LeeConstants">
+		<property name="serverUrl" value="${lee.comm.serverUrl}" />
+		<property name="attachSaveDir" value="${lee.comm.attachSaveDir}" />
+		<property name="bbsSaveDir" value="${lee.comm.bbsSaveDir}" />
+		<property name="bbsSaveUrl" value="${lee.comm.bbsSaveUrl}" />
+		<property name="leeUrl" value="${lee.url}" />
+		<property name="imgUrl" value="${lee.img.url}" />
+	</bean>
+	
+	<!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail.host}"/>
+    <property name="username" value="${mail.username}"/>
+    <property name="password" value="${mail.password}"/>
+    <property name="port" value="${mail.port}"/>
+    <property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+            <prop key="hostname">${mail.host}</prop>
+        </props>
+    </property>
+</bean> -->
+	
+	
+</beans>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="lee.mp">
+
+	<select id="orderList" parameterClass ="lee.mp.service.OrderSearchVO" resultClass ="lee.prdt.service.OrderVO" >
+		 select
+			addr,
+			to_char(arv_date, 'YYYY-MM-DD') as arv_date,
+			to_char(cart_reg_date, 'YYYY-MM-DD') as cart_reg_date,
+			del_yn,
+			to_char(order_date, 'YYYY-MM-DD') as order_date,
+			order_sno,
+			order_state,
+			to_char(pay_date, 'YYYY-MM-DD') as pay_date,
+			pay_gubun,
+			pay_gubun2,
+			prdt_count,
+			prdt_sno,
+			usr_no,
+			total_price,
+			 fun_getPrdtNm(prdt_sno) as prdt_nm
+		from 
+			ck_order
+		where
+			 del_yn = 'N' and
+			 usr_no=#usr_no#
+			 <isNotEmpty property="cartYn" prepend="and">
+				 <isEqual property="cartYn" compareValue="Y">
+							order_state = '101'
+				  	  </isEqual>
+				 </isNotEmpty>
+	</select>
+	
+</sqlMap>
+
