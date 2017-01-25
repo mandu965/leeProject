@@ -131,4 +131,13 @@ public class LoginController {
 		return "redirect:/main/main.do";
 	}	
 	
+	@RequestMapping(value = "/login/usrAdd.do")
+	// req 굳이 필요한가??modelMap으로 주고받는데!!! req지우고 테스트 해보자
+	public String usrAdd() throws Exception{
+		
+		System.out.println("###########################################회원가입화면 이동");
+	
+		return "/login/usrAdd";
+	}
+	
 }

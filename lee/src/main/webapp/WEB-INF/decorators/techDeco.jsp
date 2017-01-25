@@ -50,7 +50,7 @@
 		<!-- left : E -->
     
         <!-- content : S -->
-		<div class="LEE_CENTER_MAIN">
+		<div class="LEE_CENTER">
   			<decorator:body />    
   			<div class="space30"></div>   
     	</div>

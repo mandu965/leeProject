@@ -1,21 +1,28 @@
+
+
+.LEE_MAIN_WRAPPER {
+	width: 100%;
+	position:relative;
+	height:auto; 
+	margin:0 auto;
+}
+
+.LEE_MAIN_TOP {    
+	position: relative;
+	height:94px;
+	margin:0 auto;
+	width: 97%; 
+	 }
+
 .LEE_MAIN { /**index 페이지**/
 	position: relative;
-	width: 100%;
+	width: 97%;
 	margin-top:30px;
-	border-left:solid 1px #bfc1c4;
-	 /* border:solid 1px #ff0000; */
+	
 	
 }
-.LEE_CENTER_MAIN{/**일반 본문 페이지**/
-	position: relative;
-	width: 950px;
-	padding-left:20px;
-	margin-left:200px;
-	margin-top:20px;
-	border-left:solid 1px #bfc1c4;
-	/* border:solid 1px #ff0000; */
-	
-}
+
+
 .image_list {overflow: hidden;position: relative;height: 300px;width: 1100px; border:1px solid #e1e1e1; cursor:pointer; clear:both;}
 .image_list .images {position:absolute; display:none; }
 

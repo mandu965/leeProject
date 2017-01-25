@@ -85,16 +85,7 @@ $(document).ready(function() {
 			
 		
 	</ul>
- 	<!-- <div class="top_search ">
-		<div class="top_search_bar ">
-			<form id="unifiedSearchForm" name="unifiedSearchForm" action="" method="post">
-				<input type="text" id="searchTerm" name="searchTerm" /> 뭔지 모르겠다 
-				<input type="text" id="searchTerm" name="searchTerm" style="width: 170px"/>
-			</form>
-		</div>
-		<div class="top_search_btn"><img src="/lee/wcom/images/top/btn_search.gif" onclick="unifiedSearch()" style="cursor:pointer;"/></div>
-		"top_search_btn" 의미 없음, 가독성
-	</div> -->
+
 	
 	<div class="global_menu">
 		<ul>
@@ -116,7 +107,7 @@ $(document).ready(function() {
 				</c:when>
 				<c:otherwise>
 					<li><a href="<c:url value="/login/login.do"/>">로그인</a></li>
-					<li><a href="<c:url value="/usr/usrJoin.do"/>">회원가입</a></li>
+					<li><a href="<c:url value="/login/usrAdd.do"/>">회원가입</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

@@ -15,17 +15,24 @@ html{
 
 .LEE_WRAPPER {
 	width: 1100px;
-	margin:0;
 	position:relative;
-	height:auto; 
-	margin:0 auto;
 }
 
 .LEE_TOP {    
 	position: relative;
 	height:94px; 
 	 }
-
+	 
+.LEE_CENTER{/**일반 본문 페이지**/
+	position: relative;
+	width: 1000px;
+	padding-left:20px;
+	margin-left:200px;
+	margin-top:20px;
+	border-left:solid 1px #bfc1c4;
+	/* border:solid 1px #ff0000; */
+	
+}
 
 .LEE_LEFT {
 	position: relative;

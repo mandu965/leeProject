@@ -105,7 +105,7 @@ function setCookie( name, value, expiredays ) {
 
 </head>
 <body class="s_bg">
-<div class="LEE_WRAPPER"><!-- LEE_WRAPPER, 틀을 마련해준다 -->
+<div class="LEE_MAIN_WRAPPER"><!-- LEE_WRAPPER, 틀을 마련해준다 -->
 <form id="mainNotice" name="mainNotice" action="" method="post">
 <input type="hidden" id="blt_rsrc_sno" name="blt_rsrc_sno" value=""/>
 
@@ -164,7 +164,7 @@ function setCookie( name, value, expiredays ) {
 	
 	
     <!-- top : S -->
-	 	<div  class="LEE_TOP">
+	 	<div  class="LEE_MAIN_TOP">
 			<page:apply-decorator id="top" name="top"></page:apply-decorator>
 		</div>
 		<!-- top : E -->

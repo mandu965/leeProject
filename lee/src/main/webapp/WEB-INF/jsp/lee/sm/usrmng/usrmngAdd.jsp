@@ -34,10 +34,10 @@ $(document).ready(function() {
 			});
 			
 		//회원가입
-	$("#usrJoinBtn")
+	$("#usrAddBtn")
 	.button({icons:{primary:'ui-icon-check'}})
 	.click(function(){
-		$("#usrJoinForm").attr('action','<c:url value="/usr/usrAdd.do"/>').submit();
+		$("#usrAddForm").attr('action','<c:url value="/usr/usrAdd.do"/>').submit();
 		
 	});
 
@@ -48,7 +48,7 @@ $(document).ready(function() {
 <body>
 	회원가입
 
-	<form:form commandName="UsrVO" id="usrJoinForm" name="usrJoinForm" action="" method="post">
+	<form:form commandName="UsrVO" id="usrAddForm" name="usrAddForm" action="" method="post">
 
 		
         성   명 : <form:input path="usr_nm" /><br>
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	<br>
 
 	 <div class="buttonRight">
-		<button id="usrJoinBtn">가입</button>
+		<button id="usrAddBtn">가입</button>
 	 </div> 
 
 </body>

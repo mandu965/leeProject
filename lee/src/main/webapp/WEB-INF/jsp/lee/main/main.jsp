@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi,minimal-ui">
-<script type="text/javascript" src="<c:url value="/wcom/FusionCharts/FusionCharts.js" />"></script>
 
 	
 	<script type="text/javascript"> 
@@ -223,36 +222,42 @@ function e(id){
 </head>
 <body>
 
-<ul class="no_label" id="label_3">
-	<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1_on.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1.jpg" /></li>
-	<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2.jpg" /></li>
-	<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3.jpg" /></li>
-</ul>
-  <div class="LEE_MAIN">
-  <div class="image_list" id="image_list_3">
-	<div class="images" style="display:block"><img src="/lee/wcom/images/index_img/index01.jpg" /></div>
-	<div class="images"><img src="/lee/wcom/images/index_img/index02.jpg" /></div>
-	<div class="images"><img src="/lee/wcom/images/index_img/index03.jpg" /></div>
-</div>
-
-
+<div class="LEE_MAIN" style="margin:0 auto;">
+	<ul class="no_label" id="label_3">
+		<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1_on.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/1.jpg" /></li>
+		<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/2.jpg" /></li>
+		<li><img src="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3.jpg" oversrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3_on.jpg" outsrc="http://cfs.tistory.com/custom/blog/68/684698/skin/images/3.jpg" /></li>
+	</ul>
+  
+  
+	<div class="image_list" id="image_list_3">
+		<div class="images" style="display:block"><img src="/lee/wcom/images/index_img/index01.jpg" /></div>
+		<div class="images"><img src="/lee/wcom/images/index_img/index02.jpg" /></div>
+		<div class="images"><img src="/lee/wcom/images/index_img/index03.jpg" /></div>
+	</div>
+	
+	
+			
+	<h1>
+		Hello world!
 		
-<h1>
-	Hello world!
+		session loginSession = ${loginSession_id} 
+		
+	</h1>
 	
-	session loginSession = ${loginSession_id} 
+	<P>  The time on the server is ${serverTime}. </P>
 	
-</h1>
-<P>  The time on the server is ${serverTime}. </P>
-<div id="colum-left">
-<br><br><br><br><br><br><br><br><br><br>
-</div>
-<div id="colum-center">
-<br><br><br><br><br><br><br><br><br><br>
-</div>
-<div id="colum-right">
-<br><br><br><br><br><br><br><br><br><br>
-</div>
+	<div id="colum-left">
+	<br><br><br><br><br><br><br><br><br><br>
+	</div>
+	
+	<div id="colum-center">
+	<br><br><br><br><br><br><br><br><br><br>
+	</div>
+	
+	<div id="colum-right">
+	<br><br><br><br><br><br><br><br><br><br>
+	</div>
 </div>
 
 <script type="text/javascript">
