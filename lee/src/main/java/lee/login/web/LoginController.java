@@ -1,5 +1,8 @@
 package lee.login.web;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 	
+	public String generateState()
+	{
+	    SecureRandom random = new SecureRandom();
+	    return new BigInteger(130, random).toString(32);
+	}
+	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
 	@Resource(name = "loginService")
@@ -28,9 +37,20 @@ public class LoginController {
 
 	@RequestMapping(value = "/login/login.do")
 	// req 굳이 필요한가??modelMap으로 주고받는데!!! req지우고 테스트 해보자
-	public String login() throws Exception{
+	public String login(HttpServletRequest req, ModelMap modelMap) throws Exception{
 		
+		HttpSession session = req.getSession(true);
+
+	   // session.setAttribute(key, obj);
+		
+		// 상태 토큰으로 사용할 랜덤 문자열 생성
+		String state = generateState();
+		// 세션 또는 별도의 저장 공간에 상태 토큰을 저장
+		//req.session().attribute("state", state);
+		modelMap.put("state", state);
 		System.out.println("###########################################로그인화면 이동");
+		System.out.println("state====" + state);
+		
 	
 		return "/login/login";
 	}

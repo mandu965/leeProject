@@ -99,6 +99,26 @@ public class MainController {
 		System.out.println(sessionBean01);
 		System.out.println(sessionBean02);
 		
+		
+		
+		//네이버 로그인시 받는 url
+		//http://1.245.161.247:5080/lee/main/main.do?code=bhVIbNIxJDgXMww1&state=gp9ge0ql40fa2ak1lncf50ghkq
+		//state = gp9ge0ql40fa2ak1lncf50ghkq
+		/*
+		// 콜백 응답에서 state 파라미터의 값을 가져옴
+		String state = request.queryParams(“state”);
+
+		// 세션 또는 별도의 저장 공간에서 상태 토큰을 가져옴
+		String storedState = request.session().attribute(“state”);
+
+		if( !state.euals( storedState ) ) {
+		    return RESPONSE_UNAUTHORIZED; //401 unauthorized
+		} else {
+		    Return RESPONSE_SUCCESS; //200 success
+		}*/
+		
+		
+		
 		//deleteFolder("C:/Users/leejh/Desktop/ttt"); 파일삭제 테스트
 		
 		
