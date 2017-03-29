@@ -4,6 +4,9 @@ import java.util.List;
 
 public interface BoardService {
 	
+	
+	//글개수
+	int boardCount(BoardSearchVO boardSearchVO);
 	//글등록
 	long boardAdd(BoardVO boardVO) throws Exception;
 	

@@ -2,6 +2,9 @@ package lee.comm.domain;
 
 public class ListPagingVO {
 	
+	private int startRow;
+	private int endRow;
+	
 	/** 현재페이지 */
     private int pageIndex = 1;
     
@@ -43,6 +46,22 @@ public class ListPagingVO {
 
 	public void setPageGroupSize(int pageGroupSize) {
 		this.pageGroupSize = pageGroupSize;
+	}
+
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
 	}
 	
 	

@@ -56,10 +56,8 @@ $(document).ready(function() {
     
    <div id="kwork_contents">
    		<div class="page_title">
-			<%-- <c:out value="${PAGE_TITLE}"/> --%>
-			<c:out value="페이지 타이틀"/>
-			<%-- <span class="pageLocation"><c:out escapeXml="false" value="${PAGE_NAVI}${PAGE_TITLE}"/></span> --%>
-			<span class="pageLocation"><c:out escapeXml="false" value="페이지네비----페이지 타이틀"/></span>
+			<c:out value="게시판"/>
+			<span class="pageLocation"><c:out escapeXml="false" value="B -> 게시판"/></span>
 		</div>
 		
 		<div class="section">
@@ -74,21 +72,13 @@ $(document).ready(function() {
 							<tr>
 								<td>
 									<span class="title">제목</span>
-									<form:input path="sh_title" cssClass="w150"/>
+									<form:input path="sh_title" style="width:300px;"/>
 									
 									<span class="title">작성자</span>
-									<form:input path="sh_reg_usr" cssClass="w150"/>
+									<form:input path="sh_reg_usr" />
 									
 									<span class="title">id</span>
-									<form:input path="sh_id" cssClass="w150"/>
-									
-			<%-- 					<form:select path="sh_id"> 
-									<form:option value="all">IT사업부</form:option>
-									<form:option value="all">상표디자인조사팀</form:option>
-									<form:option value="all">특허정보분석사업본부</form:option>
-									<form:option value="all">특허정보분석센터</form:option>
-																	
-								</form:select>  --%>
+									<form:input path="sh_id" />
 									
 								</td>
 								<td class="searchBtn">
@@ -112,8 +102,7 @@ $(document).ready(function() {
 						<label for="pageSize30">30개</label> 
 						
 						<input type="radio" id="pageSize50" name="pageSize" value="50" <c:if test="${pageSize=='50'}"> checked="checked"</c:if> />
-						<label for="pageSize50">50개</label> 총
-					${count}건 
+						<label for="pageSize50">50개</label> 총 ${count}건 
 				</div>
 				<div class="buttonRight">
 					<c:if test="${not empty lee_loginSession }">  <!-- 로그인 사용자만 가능 -->
@@ -129,13 +118,12 @@ $(document).ready(function() {
 				<!-- list : S -->
 				<div class="tableContents">
 					<table class="list wfull"> <!-- list wfull -->
-						<!-- #kwork_contents table.wfull { width:100%; } -->
 						<colgroup>
 							<col class="w5p" />
 							<col class="" />
-							 <col class="w10p" />
-							 <col class="w10p" />
-							 <col class="w10p" /> 
+							<col class="w10p" />
+							<col class="w10p" />
+							<col class="w10p" /> 
 							<col class="w10p" />
 							<col class="w5p" />
 						</colgroup>
@@ -178,7 +166,7 @@ $(document).ready(function() {
 													<td class="tleft"><a href="<c:url value="${CTX_PATH}boardview.do?blt_rsrc_sno=${vo.blt_rsrc_sno} "/>"><font color="red">[공지]</font><c:out value="${vo.bbs_title}"/></a></td>
 												</c:when>
 												<c:otherwise>
-													<td class="tleft"><a href="<c:url value="${CTX_PATH}boardview.do?blt_rsrc_sno=${vo.blt_rsrc_sno} "/>"><c:out value="${vo.bbs_title}"/></a></td>
+													<td class="tleft"><a href="<c:url value="${CTX_PATH}boardview.do?blt_rsrc_sno=${vo.blt_rsrc_sno} "/>">${vo.bbs_title}</a></td>
 												</c:otherwise>
 												
 												</c:choose>
@@ -210,16 +198,16 @@ $(document).ready(function() {
 			
 			<!-- Paging : S -->
 			<c:if test="${count > 0}">
+			<!--페이지 개수  -->
 				<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
-				<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+				<c:set var="startPage" value="${pageGroupSize*(nowPageGroup-1)+1}" />
 				<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
-				
 				<c:if test="${endPage > pageCount}">
 					<c:set var="endPage" value="${pageCount}" />
 				</c:if>
 
-				<c:if test="${numPageGroup > 1}">
-					<a href="<c:url value = "${CTX_PATH}boardList.do?pageIndex=${(numPageGroup-2)*pageGroupSize+1 }&pageSize=${pageSize}&bbs_sno=${bbs_sno}"/>">[이전]</a>
+				<c:if test="${nowPageGroup > 1}">
+					<a href="<c:url value = "${CTX_PATH}boardList.do?pageIndex=${(nowPageGroup-2)*pageGroupSize+1 }&pageSize=${pageSize}&bbs_sno=${bbs_sno}"/>">[이전]</a>
 				</c:if>
 
 				<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -229,8 +217,8 @@ $(document).ready(function() {
 					</a>
 				</c:forEach>
 
-				<c:if test="${numPageGroup < pageGroupCount}">
-					<a href="<c:url value = "${CTX_PATH}boardList.do?pageIndex=${numPageGroup*pageGroupSize+1}&pageSize=${pageSize}&bbs_sno=${bbs_sno}"/>">[다음]</a>
+				<c:if test="${nowPageGroup < pageGroupCount}">
+					<a href="<c:url value = "${CTX_PATH}boardList.do?pageIndex=${nowPageGroup*pageGroupSize+1}&pageSize=${pageSize}&bbs_sno=${bbs_sno}"/>">[다음]</a>
 				</c:if>
 			</c:if>
 			<!-- Pageing : E -->

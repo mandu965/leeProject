@@ -3,6 +3,7 @@ package lee.board.web;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -92,33 +93,37 @@ public class BoardController {
 		String jsp_path =uri.substring(0, uri.lastIndexOf("/")+1);
 
 		long bbs_sno = boardSearchVO.getBbs_sno();
-		System.out.println("bbs_sno====" + bbs_sno);
 		
-		List boardList = boardService.boardList(boardSearchVO);
+		
 		
 		
 		///////paging : S//////////////////////////////
 		
-		int pageSize = boardSearchVO.getPageSize();
-		int pageIndex = boardSearchVO.getPageIndex();
-		int pageGroupSize = boardSearchVO.getPageGroupSize();
+		int pageSize = boardSearchVO.getPageSize();// 한페이지에 나오는 게시물 개수
+		int pageIndex = boardSearchVO.getPageIndex(); //현재 선택한 페이지 number
+		int pageGroupSize = boardSearchVO.getPageGroupSize(); // 페이지 번호가 몇개 나오느냐 개수
 		
 
 		int startRow = (pageIndex - 1) * pageSize;// 한 페이지의 시작글 번호
 		int endRow = pageIndex * pageSize;// 한 페이지의 마지막 글번호
-		int count = boardList.size();
+		
 		
 		System.out.println("pageIndex====" + pageIndex);
 		System.out.println("pageSize====" + pageSize);
 		System.out.println("pageGroupSize====" + pageGroupSize);
-		System.out.println("count====" + count);
+		
 		System.out.println("startRow====" + startRow);
 		System.out.println("endRow====" + endRow);
 		
+		boardSearchVO.setStartRow(startRow);
+		boardSearchVO.setEndRow(endRow);
+		int count = boardService.boardCount(boardSearchVO); //게시물 총 개수
+		System.out.println("count====" + count);
 		// 페이지그룹의 갯수
 		// ex) pageGroupSize가 3일 경우 '[1][2][3]'가 pageGroupCount 개 만큼 있다.
+		//총 개시물 개수 /    한페이지당 나올 게시물 개수 * 페이지그룹 size + (게시물 /pageSize * pageGroupSize 에 나머지가 있다면 +1해준다)
 		int pageGroupCount = count / (pageSize * pageGroupSize) + (count % (pageSize * pageGroupSize) == 0 ? 0 : 1);
-		//                 = 24    /         10*2               +   24   % 20 = 0 ? 0: 1     
+		//                 = 1    /         10*3               +   12   % (10*3) = 0 ? 0: 1     
 		
 		System.out.println("pageGroupCount====" + pageGroupCount);
 		
@@ -127,30 +132,48 @@ public class BoardController {
 		// 페이지 그룹 번호
 		// ex) pageGroupSize가 3일 경우 '[1][2][3]'의 페이지그룹번호는 1 이고 '[2][3][4]'의
 		// 페이지그룹번호는 2 이다.
-		int numPageGroup = (int) Math.ceil((double) pageIndex / pageGroupSize);
-		System.out.println("numPageGroup====" + numPageGroup);
+		int nowPageGroup = (int) Math.ceil((double) pageIndex / pageGroupSize);
+		System.out.println("nowPageGroup====" + nowPageGroup);
 		
-
-		ArrayList articleList = new ArrayList();
-
-		if (count > 0) {
-			if (endRow > count) //ex) count가 19일 경우 endRow를 19로 마춘다
-				endRow = count;
-			for (int i = startRow; i < endRow; i++) {
-				articleList.add(boardList.get(i));
+		
+		List<BoardVO> boardList = boardService.boardList(boardSearchVO);
+		
+		if(boardList!=null && boardList.size()>0){
+			//노랑, 주황, 핑크, 연두, 하늘, 남색
+			String mark_color[]={"#fcff00","#ffa700", "#ffa2b4", "#7bffb1", "#85fff8", "#937eff"};
+			int mark_color_index=0;
+			String kwd = boardSearchVO.getSh_title();
+			boolean kwd_exist= false;
+			String[] sh_kwdList;
+			if(kwd!=null && kwd.length()>0){
+				kwd_exist = true;	
 			}
-
-		} else {
-			articleList = null;
+			for(int i=0; i<boardList.size(); i++){
+				if(boardList.get(i).getBbs_title()!=null){
+					if(kwd_exist){
+						sh_kwdList = kwd.split(" ");
+						if(sh_kwdList.length>0){
+							for(int j=0; j<sh_kwdList.length;j++){
+								mark_color_index = j%6;
+								boardList.get(i).setBbs_title(boardList.get(i).getBbs_title().replaceAll(sh_kwdList[j], "<mark style='background:"+mark_color[mark_color_index]+"'>"+sh_kwdList[j]+"</mark>"));
+							}
+						}
+							
+					}
+				}
+			}
+			
 		}
+		
+		
 		
 		modelMap.put("pageIndex", pageIndex);
 		modelMap.put("pageSize", pageSize);
 		modelMap.put("count", count);
 		modelMap.put("pageGroupSize", pageGroupSize);
-		modelMap.put("numPageGroup", numPageGroup);
+		modelMap.put("nowPageGroup", nowPageGroup);
 		modelMap.put("pageGroupCount", pageGroupCount);
-		modelMap.put("articleList", articleList);
+		modelMap.put("articleList", boardList);
 		///////paging : E//////////////////////////////
 		
 		modelMap.put("bbs_sno", bbs_sno);

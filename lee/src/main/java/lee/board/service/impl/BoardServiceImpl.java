@@ -28,6 +28,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.boardAdd(boardVO);
 	}
 
+	
+	//글개수
+	public int boardCount(BoardSearchVO boardSearchVO){
+		return boardDAO.boardCount(boardSearchVO);
+	}
+
 	@Override
 	public List boardList(BoardSearchVO boardSearchVO) throws Exception {
 		return boardDAO.boardList(boardSearchVO);

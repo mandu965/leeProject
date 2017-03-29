@@ -2,38 +2,69 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="lee">
 
+	<select id="boardCount" parameterClass="lee.board.service.BoardSearchVO" resultClass="int">
+		select
+		 count(0)
+		  from
+	        (
+	         SELECT
+	            blt_rsrc_sno, rownum as rnum
+	         FROM
+	            (
+				SELECT
+			    	blt_rsrc_sno
+	            FROM
+			  		CK_BLT_RSRc
+				where  
+			   		del_yn = 'N'
+			   	<isNotEmpty property="sh_reg_usr" prepend="and">
+					FUN_GETUSRNAME(reg_usr_no) as usr_nm like '%' || #sh_reg_usr# || '%'
+				</isNotEmpty>
+				<isNotEmpty property="sh_title" prepend="and">
+					bbs_title like '%' || #sh_title# || '%'
+				</isNotEmpty>
+	            order by ntc_yn desc, blt_rsrc_sno desc, reg_date DESC
+	            )a
+	            
+	            )r1, CK_BLT_RSRC b 
+	            WHERE
+	            r1.blt_rsrc_sno = b.blt_rsrc_sno
+	
+	</select>
+
     <select id="boardList" parameterClass="lee.board.service.BoardSearchVO" resultClass="lee.board.service.BoardVO">
-		SELECT
-		    bbs_sno,
-	        blt_rsrc_sno,
-	        bbs_title,
-	        bbs_contents,
-	        reg_usr_no,
-	        FUN_GETUSRNAME(reg_usr_no) as usr_nm,
-	        bbs_cnt,
-	        atch_file_sno,
-	        ntc_yn,
-			to_char(reg_date, 'YYYY-MM-DD') as reg_date,
+	    select
+	 		r1.blt_rsrc_sno,bbs_title,bbs_contents,reg_usr_no,FUN_GETUSRNAME(reg_usr_no) as usr_nm,
+		    bbs_cnt,atch_file_sno,ntc_yn,to_char(reg_date, 'YYYY-MM-DD') as reg_date,
 			(select usr_id from ck_usr where usr_no=reg_usr_no) as usr_id
-		<!-- 	(substr(reg_date,0,3) || '-' ||substr(reg_date,5,6) ||'-' || substr(reg_date,8,9)) as --> <!-- substr(reg_date,0,2) as reg_date  -->          
-			<!-- substr(to_date(reg_date, 'yy-mm-dd'),2) as reg_date  5/01/22 이렇게 나온다. --> 
-			<!-- to_date(reg_date, 'yy-mm-dd') as reg_date 2015-01-22 00:00:00 이렇게 나온다.-->
-		FROM
-		  ck_blt_rsrc
-		where 
-		   bbs_sno = #bbs_sno# and 
-		   del_yn = 'N'
-		   <isNotEmpty property="sh_reg_usr" prepend="and">
-				FUN_GETUSRNAME(reg_usr_no) as usr_nm like '%' || #sh_reg_usr# || '%'
-			</isNotEmpty>
-			<isNotEmpty property="sh_title" prepend="and">
-				bbs_title like '%' || #sh_title# || '%'
-			</isNotEmpty>
-			<!-- <isNotEmpty property="sh_id" prepend="and">
-				
-			</isNotEmpty> -->
-		  order by ntc_yn desc, blt_rsrc_sno desc, reg_date desc
+	    from
+	        (
+	         SELECT
+	            blt_rsrc_sno, rownum as rnum
+	         FROM
+	            (
+				SELECT
+			    	blt_rsrc_sno
+	            FROM
+			  		CK_BLT_RSRc
+				where  
+			   		del_yn = 'N'
+			   	<isNotEmpty property="sh_reg_usr" prepend="and">
+					FUN_GETUSRNAME(reg_usr_no) as usr_nm like '%' || #sh_reg_usr# || '%'
+				</isNotEmpty>
+				<isNotEmpty property="sh_title" prepend="and">
+					bbs_title like '%' || #sh_title# || '%'
+				</isNotEmpty>
+	            order by ntc_yn desc, blt_rsrc_sno desc, reg_date DESC
+	            )a
+	            
+	            )r1, CK_BLT_RSRC b 
+	            WHERE
+	            r1.blt_rsrc_sno = b.blt_rsrc_sno AND
+	            rnum between #startRow# and #endRow#
     </select>
+    
+
    
 
    <insert id="boardAdd" parameterClass="lee.board.service.BoardVO">

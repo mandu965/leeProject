@@ -21,6 +21,11 @@ public class BoardDAO {
 		return (Long) sqlMapClientTemplate.insert(("lee.boardAdd"), boardVO);
 	}
 	
+	//글개수
+	public int boardCount(BoardSearchVO boardSearchVO){
+		return (Integer) sqlMapClientTemplate.queryForObject("lee.boardCount", boardSearchVO);
+	}
+	
 	public List boardList(BoardSearchVO boardSearchVO){
 		
 		return sqlMapClientTemplate.queryForList("lee.boardList", boardSearchVO);
