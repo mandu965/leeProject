@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
 
 
 <html>
@@ -248,7 +249,25 @@ function e(id){
 	<P>  The time on the server is ${serverTime}. </P>
 	
 	<div id="colum-left">
-	<br><br><br><br><br><br><br><br><br><br>
+	<br>
+	헤더정보
+	<table>
+        <%
+            Enumeration enumeration = request.getHeaderNames();
+            while (enumeration.hasMoreElements()) {
+                String name = (String) enumeration.nextElement();
+                String value = request.getHeader(name);
+        %>
+        <tr>
+            <td><%=name%></td>
+            <td><%=value%></td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+
+
 	</div>
 	
 	<div id="colum-center">
@@ -259,6 +278,21 @@ function e(id){
 	<br><br><br><br><br><br><br><br><br><br>
 	</div>
 </div>
+<!-- 네이버아디디로로그인 Callback페이지 처리 Script -->
+<script type="text/javascript">
+	// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+	function naverSignInCallback() {
+		// naver_id_login.getProfileData('프로필항목명');
+		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
+		alert(naver_id_login.getProfileData('email'));
+		alert(naver_id_login.getProfileData('nickname'));
+		alert(naver_id_login.getProfileData('age'));
+	}
+
+	// 네이버 사용자 프로필 조회
+	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+</script>
+<!-- //네이버아디디로로그인 Callback페이지 처리 Script -->
 
 <script type="text/javascript">
 <!--

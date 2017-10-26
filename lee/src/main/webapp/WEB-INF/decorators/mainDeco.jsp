@@ -16,28 +16,35 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 <meta name="viewport" content="height=device-height, width=device-width"/>
 
-
-<%-- <link rel="stylesheet" type="text/css" href="<c:url value="/wcom/css/leeWork.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="/wcom/jquery/css/jquery-ui-1.8.16.custom.css"/>" />
-	
-<script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-1.6.2.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-ui-1.8.16.custom.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/wcom/js/util.js" />" ></script>
-<script type="text/javascript" src="<c:url value="/wcom/js/dialog.js" />" ></script>
-<script type="text/javascript" src="<c:url value="/wcom/js/comm.js" />" ></script>
-
-<script type="text/javascript" src="<c:url value="/wcom/jquery/jquery-1.11.2.min.js" />"></script> --%>
-
 <link rel="stylesheet" type="text/css" href="<c:url value="/wcom/css/leeWork.css" />" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/wcom/jquery/css/jquery-ui-1.9.2.custom.css"/>" />
-
-
 <script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-2.1.4.js" />"></script>
 <script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-ui-1.9.2.custom.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/wcom/js/lee.naverLogin.js" />"></script>
 <script type="text/javascript">
+<%@ page import="java.util.Enumeration" %>
+
+<%
+ 
+ 
+ 
+    // 헤더 추가하기
+    response.addHeader("Authorization", "Bearer AAAAOWHOLgrVEQ5kJtSfl49kPTVfU4D/AJfS8hXF+W5UaqODqbJR3VuvLhZ6Wri8IuR/zR/YIF1rIfoPj7mZ4eDoPvI=");
+ 
+    // 헤더값 변경하기
+   // response.setHeader("apiKey", "112233") ;
+     
+    // 헤더값을 정수값으로 변경하기
+    //response.setIntHeader("apiKey", 25) ;
+
+ 
+%>
+
 $(document).ready(function(){
 	
 	
+
+
 	
 	//게시판 일련번호를 이용하여 각 팝업창 구분
 	var array = new Array();

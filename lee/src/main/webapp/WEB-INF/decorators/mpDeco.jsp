@@ -16,10 +16,9 @@
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/wcom/css/leeWork.css" />" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/wcom/jquery/css/jquery-ui-1.9.2.custom.css"/>" />
-
-
 <script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-2.1.4.js" />"></script>
 <script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-ui-1.9.2.custom.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/wcom/js/lee.naverLogin.js" />"></script>
 
 
 <decorator:head />

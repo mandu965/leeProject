@@ -1,11 +1,10 @@
 package lee.techmng.web;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import lee.sm.usrmng.web.UsrmngController;
@@ -175,13 +175,7 @@ public class techmngController {
 		}
 */
 
-		//dateCal();
-
-		
-		
-		//readFileName("D:\\www\\click\\files\\request");
-		
-		File fileT = new File("D:\\www\\click\\files\\request\\test.pdf");
+		/*File fileT = new File("D:\\www\\click\\files\\request\\test.pdf");
 		//pdf text 추출
 		String text = null;
 		COSDocument cosDoc = null;   
@@ -197,45 +191,34 @@ public class techmngController {
                 text= Tstripper.getText(pdDocument);
               
             }
-			
-			//IOUtils.closeQuietly(bufferedWriter);
 			   pdDocument.close();
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			//RandomAccessFile raf = new RandomAccessFile("D:\\www\\click\\files\\request\\test.pdf", "r");
-		//	InputStream is = Channels.newInputStream(raf.getChannel());
-           // InputStream is = new FileInputStream(file);   
-              
-           // PDFParser parser = new PDFParser(is);
-            
-           // parser.parse();   
-          // cosDoc = parser.getDocument();
-            
-           //cosDoc = parseDocument(is);   
-               
-           // PDFTextStripper striper = new PDFTextStripper();   
-           // text = striper.getText(new PDDocument(cosDoc));   
+ 
             System.out.println(text);   
         }catch(IOException e){   
             e.printStackTrace();   
         }finally{
         	
-        }
+        }*/
 
 		
-		
+		File a = new File("E:\\www\\ktg\\kiss\\test.tif");
 		// extractingText(fileT); //pdf -> txt 파일 전환
+		
+		 File inputFile = new File("E:\\www\\ktg\\kiss\\test.tif");
+		  File outputFile = new File("E:\\www\\ktg\\kiss\\test.bmp");
+		  
+		  String str_TiffFileUrl = "E:\\www\\ktg\\kiss\\test.tif";
+		  String str_JPGFileUrl= "E:\\www\\ktg\\kiss\\test.jpg";
+		 // ConvertTiffToJpg(str_TiffFileUrl, str_JPGFileUrl);
 		 
+		  File inFile = new File("E:\\www\\ktg\\kiss\\test.tif");
+		  File outFile = new File("E:\\www\\ktg\\kiss\\test.bmp");
 
+		  BufferedImage image = ImageIO.read(inFile);
+		  BufferedImage convertedImage = new BufferedImage(image.getWidth(), 
+		      image.getHeight(), BufferedImage.TYPE_INT_RGB);
+		  convertedImage.createGraphics().drawRenderedImage(image, null);
+		  ImageIO.write(convertedImage, "jpg", outFile);
 		return "/techmng/tech01";
 	}
 	
@@ -400,5 +383,22 @@ public class techmngController {
 
 		return "/techmng/tech02";
 	}
-
+	public static void ConvertTiffToJpg(String str_TiffUrl, String str_JpgFileDestinationUrl) throws Exception
+	  {
+	    /*try
+	    {
+	      FileSeekableStream obj_FileSeekableStream = new FileSeekableStream(new File(str_TiffUrl));
+	      ImageDecoder obj_ImageDecoder = ImageCodec.createImageDecoder("tiff", obj_FileSeekableStream, null);
+	      RenderedImage obj_RenderedImage = obj_ImageDecoder.decodeAsRenderedImage();
+	      JAI.create("filestore",obj_RenderedImage,str_JpgFileDestinationUrl, "jpeg");
+	      obj_RenderedImage = null;
+	      obj_ImageDecoder = null;
+	      obj_FileSeekableStream.close();
+	    }
+	    catch(Exception ex)
+	    {
+	      throw ex;
+	    }*/
+	 
+	  }
 }

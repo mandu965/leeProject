@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<c:url value="/wcom/jquery/js/jquery-ui-1.9.2.custom.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/wcom/js/lee.dialog.js" />"></script>
 <script type="text/javascript" src="<c:url value="/wcom/js/lee.util.js" />"></script>
-
+<script type="text/javascript" src="<c:url value="/wcom/js/lee.naverLogin.js" />"></script>
 
 <decorator:head />
 
